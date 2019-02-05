@@ -1,5 +1,8 @@
-require 'astree/version'
 require 'colorize'
+
+Dir[File.join(__dir__, '**/*.rb')].each do |f|
+  require f
+end
 
 class ASTree
   SPACE_SIZE = 7
@@ -22,17 +25,22 @@ class ASTree
 
   private
 
-  def traverse(node, parent: nil)
-    return stringify_element(node) unless node.instance_of?(RubyVM::AbstractSyntaxTree::Node)
-
+  def traverse(node)
     buffer = stringify_node(node)
 
     children = node.children
+    children_count = children.size
 
-    until children.empty?
-      child = children.shift
-      last_element = children.empty?
-      child_buffer = traverse(child, parent: node).lines
+    children_count.times do |index|
+      child = children[index]
+      last_element = children_count == index + 1
+
+      child_buffer = if child.instance_of?(RubyVM::AbstractSyntaxTree::Node)
+                       traverse(child)
+                     else
+                       pretty_element(node: node, index: index)
+                     end.lines
+
       buffer << draw_line(token: child_buffer.shift, last_element: last_element)
 
       child_buffer.each do |line|
@@ -43,13 +51,18 @@ class ASTree
     buffer
   end
 
+  def pretty_element(node:, index:)
+    klass = PrettyNode.const_get(node.type)
+    klass.new(node).stringify_element(index)
+  end
+
   def stringify_element(element)
     str = element.inspect
     (element.is_a?(Symbol) ? str.colorize(:magenta) : str) + "\n"
   end
 
   def stringify_node(node)
-    "<%s>\n" % [node.type.to_s.colorize(:green)]
+    "<%s> [%d:%d-%d:%d]\n" % [node.type.to_s.colorize(:green), node.first_lineno, node.first_column, node.last_lineno, node.last_column]
   end
 
   def draw_space(last_element:)
