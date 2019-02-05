@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'astree'
+require 'optparse'
+
+opt_parse = OptionParser.new do |opt|
+  opt.banner = 'Usage: astree ruby_programfile'
+  opt.parse!(ARGV)
+end
+
+if ARGV.first.nil?
+  puts opt_parse
+else
+  puts ASTree.parse(File.read(ARGV.first))
+end
