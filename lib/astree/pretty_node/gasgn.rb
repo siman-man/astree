@@ -3,6 +3,8 @@ class ASTree::PrettyNode::GASGN < ASTree::PrettyNode
     case index
     when 0
       '(variable name)'
+    when 1
+      '(unknown)'
     else
       raise "Unexpected index [#{index}]."
     end

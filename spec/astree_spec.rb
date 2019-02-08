@@ -414,6 +414,33 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'iasgn multi' do
+      code = <<~'CODE'
+        @x, @y = foo
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:12]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:12]
+               ├───── <VCALL> [1:9-1:12]
+               │      └───── :foo (method id)
+               ├───── <ARRAY> [1:0-1:6]
+               │      ├───── <IASGN> [1:0-1:2]
+               │      │      ├───── :@x (variable name)
+               │      │      └───── nil (unknown)
+               │      ├───── <IASGN> [1:4-1:6]
+               │      │      ├───── :@y (variable name)
+               │      │      └───── nil (unknown)
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'dasgn' do
       code = <<~'CODE'
         x = nil
@@ -447,6 +474,85 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'dasgn multi' do
+      code = <<~'CODE'
+        x = y = nil
+        1.times { x, y = foo }
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-2:22]
+        ├───── [:x, :y] (local table)
+        ├───── nil (arguments)
+        └───── <BLOCK> [1:0-2:22]
+               ├───── <LASGN> [1:0-1:11]
+               │      ├───── :x (variable name)
+               │      └───── <LASGN> [1:4-1:11]
+               │             ├───── :y (variable name)
+               │             └───── <NIL> [1:8-1:11]
+               └───── <ITER> [2:0-2:22]
+                      ├───── <CALL> [2:0-2:7]
+                      │      ├───── <LIT> [2:0-2:1]
+                      │      │      └───── 1 (value)
+                      │      ├───── :times (method id)
+                      │      └───── nil (arguments)
+                      └───── <SCOPE> [2:8-2:22]
+                             ├───── [] (local table)
+                             ├───── nil (arguments)
+                             └───── <MASGN> [2:10-2:20]
+                                    ├───── <VCALL> [2:17-2:20]
+                                    │      └───── :foo (method id)
+                                    ├───── <ARRAY> [2:10-2:14]
+                                    │      ├───── <DASGN> [2:10-2:11]
+                                    │      │      ├───── :x (variable name)
+                                    │      │      └───── nil (unknown)
+                                    │      ├───── <DASGN> [2:13-2:14]
+                                    │      │      ├───── :y (variable name)
+                                    │      │      └───── nil (unknown)
+                                    │      └───── nil (unknown)
+                                    └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
+    it 'dasgn_curr multi' do
+      code = <<~'CODE'
+        1.times { x, y = foo }
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:22]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <ITER> [1:0-1:22]
+               ├───── <CALL> [1:0-1:7]
+               │      ├───── <LIT> [1:0-1:1]
+               │      │      └───── 1 (value)
+               │      ├───── :times (method id)
+               │      └───── nil (arguments)
+               └───── <SCOPE> [1:8-1:22]
+                      ├───── [:x, :y] (local table)
+                      ├───── nil (arguments)
+                      └───── <MASGN> [1:10-1:20]
+                             ├───── <VCALL> [1:17-1:20]
+                             │      └───── :foo (method id)
+                             ├───── <ARRAY> [1:10-1:14]
+                             │      ├───── <DASGN_CURR> [1:10-1:11]
+                             │      │      ├───── :x (variable name)
+                             │      │      └───── nil (unknown)
+                             │      ├───── <DASGN_CURR> [1:13-1:14]
+                             │      │      ├───── :y (variable name)
+                             │      │      └───── nil (unknown)
+                             │      └───── nil (unknown)
+                             └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'casgn' do
       code = <<~'CODE'
         @@x = 2
@@ -466,6 +572,33 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'casgn multi' do
+      code = <<~'CODE'
+        @@x, @@y = foo
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:14]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:14]
+               ├───── <VCALL> [1:11-1:14]
+               │      └───── :foo (method id)
+               ├───── <ARRAY> [1:0-1:8]
+               │      ├───── <CVASGN> [1:0-1:3]
+               │      │      ├───── :@@x (variable name)
+               │      │      └───── nil (unknown)
+               │      ├───── <CVASGN> [1:5-1:8]
+               │      │      ├───── :@@y (variable name)
+               │      │      └───── nil (unknown)
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'gasgn' do
       code = <<~'CODE'
         $x = 3
@@ -479,6 +612,37 @@ RSpec.describe ASTree do
                ├───── :$x (variable name)
                └───── <LIT> [1:5-1:6]
                       └───── 3 (value)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
+    it 'gasgn multi' do
+      code = <<~'CODE'
+        $x, $y = [1, 2]
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:15]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:15]
+               ├───── <ARRAY> [1:9-1:15]
+               │      ├───── <LIT> [1:10-1:11]
+               │      │      └───── 1 (value)
+               │      ├───── <LIT> [1:13-1:14]
+               │      │      └───── 2 (value)
+               │      └───── nil (unknown)
+               ├───── <ARRAY> [1:0-1:6]
+               │      ├───── <GASGN> [1:0-1:2]
+               │      │      ├───── :$x (variable name)
+               │      │      └───── nil (unknown)
+               │      ├───── <GASGN> [1:4-1:6]
+               │      │      ├───── :$y (variable name)
+               │      │      └───── nil (unknown)
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
       EXPECT
 
       result = ASTree.parse(code).to_s.uncolorize
