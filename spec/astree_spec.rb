@@ -64,6 +64,35 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'unless without else' do
+      code = <<~'CODE'
+        unless x == 1 then
+          foo
+        end
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-3:3]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <UNLESS> [1:0-3:3]
+               ├───── <OPCALL> [1:7-1:13]
+               │      ├───── <VCALL> [1:7-1:8]
+               │      │      └───── :x (method id)
+               │      ├───── :== (method id)
+               │      └───── <ARRAY> [1:12-1:13]
+               │             ├───── <LIT> [1:12-1:13]
+               │             │      └───── 1 (value)
+               │             └───── nil (unknown)
+               ├───── <VCALL> [2:2-2:5]
+               │      └───── :foo (method id)
+               └───── nil (else clause)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'case' do
       code = <<~'CODE'
         case x
