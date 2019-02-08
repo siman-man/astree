@@ -814,6 +814,23 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'empty hash' do
+      code = <<~'CODE'
+        {}
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:2]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <HASH> [1:0-1:2]
+               └───── nil (unknown)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'yield' do
       code = <<~'CODE'
         yield
