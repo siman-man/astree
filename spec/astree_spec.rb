@@ -647,6 +647,26 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'unary operator' do
+      code = <<~'CODE'
+        !x
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:2]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <OPCALL> [1:0-1:2]
+               ├───── <VCALL> [1:1-1:2]
+               │      └───── :x (method id)
+               ├───── :! (method id)
+               └───── nil (arguments)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'fcall' do
       code = <<~'CODE'
         foo(1)

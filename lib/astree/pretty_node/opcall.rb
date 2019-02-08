@@ -3,6 +3,8 @@ class ASTree::PrettyNode::OPCALL < ASTree::PrettyNode
     case index
     when 1
       '(method id)'
+    when 2
+      '(arguments)'
     else
       raise "Unexpected index [#{index}]."
     end
