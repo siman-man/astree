@@ -395,6 +395,33 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'lasgn multi' do
+      code = <<~'CODE'
+        x, y = foo
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:10]
+        ├───── [:x, :y] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:10]
+               ├───── <VCALL> [1:7-1:10]
+               │      └───── :foo (method id)
+               ├───── <ARRAY> [1:0-1:4]
+               │      ├───── <LASGN> [1:0-1:1]
+               │      │      ├───── :x (variable name)
+               │      │      └───── nil 
+               │      ├───── <LASGN> [1:3-1:4]
+               │      │      ├───── :y (variable name)
+               │      │      └───── nil 
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'iasgn' do
       code = <<~'CODE'
         @x = 1
