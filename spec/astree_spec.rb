@@ -2278,5 +2278,46 @@ RSpec.describe ASTree do
       result = ASTree.parse(code).to_s.uncolorize
       expect(result).to eq(expect)
     end
+
+    it 'nil statement' do
+      code = <<~'CODE'
+        def foo
+          puts 'hello'
+          nil
+        end
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-4:3]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <DEFN> [1:0-4:3]
+               ├───── :foo (method id)
+               └───── <SCOPE> [1:0-4:3]
+                      ├───── [] (local table)
+                      ├───── <ARGS> [1:7-1:7]
+                      │      ├───── 0 (pre_num)
+                      │      ├───── nil (pre_init)
+                      │      ├───── nil (opt)
+                      │      ├───── nil (first_post)
+                      │      ├───── 0 (post_num)
+                      │      ├───── nil (post_init)
+                      │      ├───── nil (rest)
+                      │      ├───── nil (kw)
+                      │      ├───── nil (kwrest)
+                      │      └───── nil (block)
+                      └───── <BLOCK> [2:2-3:5]
+                             ├───── <FCALL> [2:2-2:14]
+                             │      ├───── :puts (method id)
+                             │      └───── <ARRAY> [2:7-2:14]
+                             │             ├───── <STR> [2:7-2:14]
+                             │             │      └───── "hello" (value)
+                             │             └───── nil (unknown)
+                             └───── nil (unknown)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
   end
 end
