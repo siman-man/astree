@@ -56,11 +56,6 @@ class ASTree
     klass.new(node).stringify_element(index)
   end
 
-  def stringify_element(element)
-    str = element.inspect
-    (element.is_a?(Symbol) ? str.colorize(:magenta) : str) + "\n"
-  end
-
   def stringify_node(node)
     "<%s> [%d:%d-%d:%d]\n" % [node.type.to_s.colorize(:green), node.first_lineno, node.first_column, node.last_lineno, node.last_column]
   end
