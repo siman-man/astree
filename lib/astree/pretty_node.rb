@@ -7,7 +7,7 @@ class ASTree
     end
 
     def stringify_element(index)
-      "%p %s\n" % [element_value(index), label_name(index)]
+      "%s %s\n" % [colorize_element(element_value(index)), label_name(index)]
     end
 
     def element_value(index)
@@ -16,6 +16,21 @@ class ASTree
 
     def label_name(index)
       raise NotImplementedError
+    end
+
+    private
+
+    def colorize_element(value)
+      case value
+      when String
+        value.inspect.colorize(:red)
+      when Symbol
+        value.inspect.colorize(:yellow)
+      when NilClass
+        value.inspect.colorize(:cyan)
+      else
+        value.inspect
+      end
     end
   end
 end

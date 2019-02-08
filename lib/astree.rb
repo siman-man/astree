@@ -57,7 +57,7 @@ class ASTree
   end
 
   def stringify_node(node)
-    "<%s> [%d:%d-%d:%d]\n" % [node.type.to_s.colorize(:green), node.first_lineno, node.first_column, node.last_lineno, node.last_column]
+    "<%s> [%d:%d-%d:%d]\n" % [node.type.to_s.colorize(:blue), node.first_lineno, node.first_column, node.last_lineno, node.last_column]
   end
 
   def draw_space(last_element:)
