@@ -26,34 +26,34 @@ end
 result
 
 ```
-<SCOPE>
-├───── []
-├───── nil
-└───── <ITER>
-       ├───── <CALL>
-       │      ├───── <LIT>
-       │      │      └───── 10
-       │      ├───── :times
-       │      └───── nil
-       └───── <SCOPE>
-              ├───── [:i]
-              ├───── <ARGS>
-              │      ├───── 1
-              │      ├───── nil
-              │      ├───── nil
-              │      ├───── nil
-              │      ├───── 0
-              │      ├───── nil
-              │      ├───── nil
-              │      ├───── nil
-              │      ├───── nil
-              │      └───── nil
-              └───── <FCALL>
-                     ├───── :puts
-                     └───── <ARRAY>
-                            ├───── <DVAR>
-                            │      └───── :i
-                            └───── nil
+<SCOPE> [1:0-3:3]
+├───── [] (local table)
+├───── nil (arguments)
+└───── <ITER> [1:0-3:3]
+       ├───── <CALL> [1:0-1:8]
+       │      ├───── <LIT> [1:0-1:2]
+       │      │      └───── 10 (value)
+       │      ├───── :times (method id)
+       │      └───── nil (arguments)
+       └───── <SCOPE> [1:9-3:3]
+              ├───── [:i] (local table)
+              ├───── <ARGS> [1:13-1:14]
+              │      ├───── 1 (pre_num)
+              │      ├───── nil (pre_init)
+              │      ├───── nil (opt)
+              │      ├───── nil (first_post)
+              │      ├───── 0 (post_num)
+              │      ├───── nil (post_init)
+              │      ├───── nil (rest)
+              │      ├───── nil (kw)
+              │      ├───── nil (kwrest)
+              │      └───── nil (block)
+              └───── <FCALL> [2:2-2:8]
+                     ├───── :puts (method id)
+                     └───── <ARRAY> [2:7-2:8]
+                            ├───── <DVAR> [2:7-2:8]
+                            │      └───── :i (variable name)
+                            └───── nil (unknown)
 ```
 
 ## Development
