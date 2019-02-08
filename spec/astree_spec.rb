@@ -414,6 +414,39 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'dasgn' do
+      code = <<~'CODE'
+        x = nil
+        1.times { x = foo }
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-2:19]
+        ├───── [:x] (local table)
+        ├───── nil (arguments)
+        └───── <BLOCK> [1:0-2:19]
+               ├───── <LASGN> [1:0-1:7]
+               │      ├───── :x (variable name)
+               │      └───── <NIL> [1:4-1:7]
+               └───── <ITER> [2:0-2:19]
+                      ├───── <CALL> [2:0-2:7]
+                      │      ├───── <LIT> [2:0-2:1]
+                      │      │      └───── 1 (value)
+                      │      ├───── :times (method id)
+                      │      └───── nil (arguments)
+                      └───── <SCOPE> [2:8-2:19]
+                             ├───── [] (local table)
+                             ├───── nil (arguments)
+                             └───── <DASGN> [2:10-2:17]
+                                    ├───── :x (variable name)
+                                    └───── <VCALL> [2:14-2:17]
+                                           └───── :foo (method id)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'casgn' do
       code = <<~'CODE'
         @@x = 2
