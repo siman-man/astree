@@ -2366,6 +2366,27 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'block_pass without other arguments' do
+      code = <<~'CODE'
+        foo(&blk)
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:9]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <FCALL> [1:0-1:9]
+               ├───── :foo (method id)
+               └───── <BLOCK_PASS> [1:4-1:8]
+                      ├───── nil (other arguments)
+                      └───── <VCALL> [1:5-1:8]
+                             └───── :blk (method id)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'defn' do
       code = <<~'CODE'
         def foo
