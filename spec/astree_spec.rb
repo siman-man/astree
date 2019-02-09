@@ -32,6 +32,43 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'if without body' do
+      code = <<~'CODE'
+        def hoge
+          if true
+          end
+        end
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-4:3]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <DEFN> [1:0-4:3]
+               ├───── :hoge (method id)
+               └───── <SCOPE> [1:0-4:3]
+                      ├───── [] (local table)
+                      ├───── <ARGS> [1:8-1:8]
+                      │      ├───── 0 (pre_num)
+                      │      ├───── nil (pre_init)
+                      │      ├───── nil (opt)
+                      │      ├───── nil (first_post)
+                      │      ├───── 0 (post_num)
+                      │      ├───── nil (post_init)
+                      │      ├───── nil (rest)
+                      │      ├───── nil (kw)
+                      │      ├───── nil (kwrest)
+                      │      └───── nil (block)
+                      └───── <IF> [2:2-3:5]
+                             ├───── <TRUE> [2:5-2:9]
+                             ├───── nil (then clause)
+                             └───── nil (else clause)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'unless' do
       code = <<~'CODE'
         unless x == 1 then
@@ -58,6 +95,43 @@ RSpec.describe ASTree do
                │      └───── :foo (method id)
                └───── <VCALL> [4:2-4:5]
                       └───── :bar (method id)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
+    it 'unless without body' do
+      code = <<~'CODE'
+        def hoge
+          unless false
+          end
+        end
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-4:3]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <DEFN> [1:0-4:3]
+               ├───── :hoge (method id)
+               └───── <SCOPE> [1:0-4:3]
+                      ├───── [] (local table)
+                      ├───── <ARGS> [1:8-1:8]
+                      │      ├───── 0 (pre_num)
+                      │      ├───── nil (pre_init)
+                      │      ├───── nil (opt)
+                      │      ├───── nil (first_post)
+                      │      ├───── 0 (post_num)
+                      │      ├───── nil (post_init)
+                      │      ├───── nil (rest)
+                      │      ├───── nil (kw)
+                      │      ├───── nil (kwrest)
+                      │      └───── nil (block)
+                      └───── <UNLESS> [2:2-3:5]
+                             ├───── <FALSE> [2:9-2:14]
+                             ├───── nil (then clause)
+                             └───── nil (else clause)
       EXPECT
 
       result = ASTree.parse(code).to_s.uncolorize
