@@ -184,6 +184,51 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'when no body' do
+      code = <<~'CODE'
+        def foo
+          case y
+          when 1
+            # OK
+          end
+        end
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-6:3]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <DEFN> [1:0-6:3]
+               ├───── :foo (method id)
+               └───── <SCOPE> [1:0-6:3]
+                      ├───── [] (local table)
+                      ├───── <ARGS> [1:7-1:7]
+                      │      ├───── 0 (pre_num)
+                      │      ├───── nil (pre_init)
+                      │      ├───── nil (opt)
+                      │      ├───── nil (first_post)
+                      │      ├───── 0 (post_num)
+                      │      ├───── nil (post_init)
+                      │      ├───── nil (rest)
+                      │      ├───── nil (kw)
+                      │      ├───── nil (kwrest)
+                      │      └───── nil (block)
+                      └───── <CASE> [2:2-5:5]
+                             ├───── <VCALL> [2:7-2:8]
+                             │      └───── :y (method id)
+                             └───── <WHEN> [3:2-3:8]
+                                    ├───── <ARRAY> [3:7-3:8]
+                                    │      ├───── <LIT> [3:7-3:8]
+                                    │      │      └───── 1 (value)
+                                    │      └───── nil (unknown)
+                                    ├───── nil (body)
+                                    └───── nil (next clause)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'while' do
       code = <<~'CODE'
         while x == 1
