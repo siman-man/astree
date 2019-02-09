@@ -3,8 +3,6 @@ class ASTree::PrettyNode::MATCH < ASTree::PrettyNode
     case index
     when 0
       '(regexp)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

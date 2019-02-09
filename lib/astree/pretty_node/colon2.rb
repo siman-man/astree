@@ -5,8 +5,6 @@ class ASTree::PrettyNode::COLON2 < ASTree::PrettyNode
       '(const path)'
     when 1
       '(const name)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

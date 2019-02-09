@@ -3,8 +3,6 @@ class ASTree::PrettyNode::IF < ASTree::PrettyNode
     case index
     when 2
       '(else clause)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

@@ -3,8 +3,6 @@ class ASTree::PrettyNode::NEXT < ASTree::PrettyNode
     case index
     when 0
       '(value)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

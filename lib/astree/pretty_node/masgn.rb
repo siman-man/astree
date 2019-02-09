@@ -5,8 +5,6 @@ class ASTree::PrettyNode::MASGN < ASTree::PrettyNode
       '(left hand side)'
     when 2
       '(rest variable)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

@@ -3,8 +3,6 @@ class ASTree::PrettyNode::BEGIN < ASTree::PrettyNode
     case index
     when 0
       '(body)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

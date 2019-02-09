@@ -7,7 +7,13 @@ class ASTree
     end
 
     def stringify_element(index)
-      "%s %s\n" % [colorize_element(element_value(index)), label_name(index)]
+      label = label_name(index)
+
+      if label.nil?
+        raise "Unexpected index [#{index}] - #{node.inspect}."
+      end
+
+      "%s %s\n" % [colorize_element(element_value(index)), label]
     end
 
     def element_value(index)

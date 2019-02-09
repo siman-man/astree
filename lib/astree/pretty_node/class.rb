@@ -3,8 +3,6 @@ class ASTree::PrettyNode::CLASS < ASTree::PrettyNode
     case index
     when 1
       '(super class)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

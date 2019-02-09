@@ -3,8 +3,6 @@ class ASTree::PrettyNode::ATTRASGN < ASTree::PrettyNode
     case index
     when 1
       '(method id)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

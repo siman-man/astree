@@ -7,8 +7,6 @@ class ASTree::PrettyNode::SCOPE < ASTree::PrettyNode
       '(arguments)'
     when 2
       '(body)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

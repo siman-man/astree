@@ -5,8 +5,6 @@ class ASTree::PrettyNode::CDECL < ASTree::PrettyNode
       '(const name)'
     when 1
       '(const name)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

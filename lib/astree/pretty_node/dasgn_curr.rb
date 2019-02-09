@@ -5,8 +5,6 @@ class ASTree::PrettyNode::DASGN_CURR < ASTree::PrettyNode
       '(variable name)'
     when 1
       '(unknown)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

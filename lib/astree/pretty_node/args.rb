@@ -21,8 +21,6 @@ class ASTree::PrettyNode::ARGS < ASTree::PrettyNode
       '(kwrest)'
     when 9
       '(block)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

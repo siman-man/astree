@@ -5,8 +5,6 @@ class ASTree::PrettyNode::RESBODY < ASTree::PrettyNode
       '(rescue clause list)'
     when 2
       '(next clause)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

@@ -3,8 +3,6 @@ class ASTree::PrettyNode::OP_ASGN1 < ASTree::PrettyNode
     case index
     when 1
       '(operator)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

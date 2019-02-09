@@ -5,8 +5,6 @@ class ASTree::PrettyNode::QCALL < ASTree::PrettyNode
       '(method id)'
     when 2
       '(arguments)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

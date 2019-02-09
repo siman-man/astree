@@ -5,8 +5,6 @@ class ASTree::PrettyNode::LASGN < ASTree::PrettyNode
       '(variable name)'
     when 1
       ''
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

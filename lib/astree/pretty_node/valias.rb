@@ -5,8 +5,6 @@ class ASTree::PrettyNode::VALIAS < ASTree::PrettyNode
       '(new name)'
     when 1
       '(old name)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

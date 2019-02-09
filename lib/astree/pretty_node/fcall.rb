@@ -5,8 +5,6 @@ class ASTree::PrettyNode::FCALL < ASTree::PrettyNode
       '(method id)'
     when 1
       '(arguments)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

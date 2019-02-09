@@ -5,8 +5,6 @@ class ASTree::PrettyNode::DSYM < ASTree::PrettyNode
       '(preceding string)'
     when 2
       '(tailing string)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end

@@ -3,8 +3,6 @@ class ASTree::PrettyNode::OPT_ARG < ASTree::PrettyNode
     case index
     when 1
       '(next opt_arg)'
-    else
-      raise "Unexpected index [#{index}]."
     end
   end
 end
