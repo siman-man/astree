@@ -1649,6 +1649,37 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'attrasgn multi' do
+      code = <<~'CODE'
+        pos.x, pos.y = coord
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:20]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:20]
+               ├───── <VCALL> [1:15-1:20]
+               │      └───── :coord (method id)
+               ├───── <ARRAY> [1:0-1:12]
+               │      ├───── <ATTRASGN> [1:0-1:5]
+               │      │      ├───── <VCALL> [1:0-1:3]
+               │      │      │      └───── :pos (method id)
+               │      │      ├───── :x= (method id)
+               │      │      └───── nil (unknown)
+               │      ├───── <ATTRASGN> [1:7-1:12]
+               │      │      ├───── <VCALL> [1:7-1:10]
+               │      │      │      └───── :pos (method id)
+               │      │      ├───── :y= (method id)
+               │      │      └───── nil (unknown)
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'methref' do
       pending('`.:` support RUBY_VERSION >= "2.7.0"')
       code = <<~'CODE'

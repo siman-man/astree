@@ -3,6 +3,8 @@ class ASTree::PrettyNode::ATTRASGN < ASTree::PrettyNode
     case index
     when 1
       'method id'
+    when 2
+      'unknown'
     end
   end
 end
