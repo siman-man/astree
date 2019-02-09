@@ -2254,6 +2254,23 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'xstr' do
+      code = <<~'CODE'
+        `less -?`
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:9]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <XSTR> [1:0-1:9]
+               └───── "less -?" (value)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'dxstr' do
       code = <<~'CODE'
         `ls #{option}`
