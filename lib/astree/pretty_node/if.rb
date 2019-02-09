@@ -2,9 +2,9 @@ class ASTree::PrettyNode::IF < ASTree::PrettyNode
   def label_name(index)
     case index
     when 1
-      '(then clause)'
+      'then clause'
     when 2
-      '(else clause)'
+      'else clause'
     end
   end
 end

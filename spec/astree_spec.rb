@@ -428,10 +428,10 @@ RSpec.describe ASTree do
                       │      │      ├───── <ARRAY> [1:4-1:8]
                       │      │      │      ├───── <LASGN> [1:4-1:5]
                       │      │      │      │      ├───── :x (variable name)
-                      │      │      │      │      └───── nil 
+                      │      │      │      │      └───── nil (unknown)
                       │      │      │      ├───── <LASGN> [1:7-1:8]
                       │      │      │      │      ├───── :y (variable name)
-                      │      │      │      │      └───── nil 
+                      │      │      │      │      └───── nil (unknown)
                       │      │      │      └───── nil (unknown)
                       │      │      └───── nil (rest variable)
                       │      ├───── nil (opt)
@@ -529,10 +529,10 @@ RSpec.describe ASTree do
                ├───── <ARRAY> [1:0-1:4]
                │      ├───── <LASGN> [1:0-1:1]
                │      │      ├───── :x (variable name)
-               │      │      └───── nil 
+               │      │      └───── nil (unknown)
                │      ├───── <LASGN> [1:3-1:4]
                │      │      ├───── :y (variable name)
-               │      │      └───── nil 
+               │      │      └───── nil (unknown)
                │      └───── nil (unknown)
                └───── nil (rest variable)
       EXPECT
@@ -557,11 +557,11 @@ RSpec.describe ASTree do
                └───── <POSTARG> [1:0-1:5]
                       ├───── <LASGN> [1:1-1:2]
                       │      ├───── :x (variable name)
-                      │      └───── nil 
+                      │      └───── nil (unknown)
                       └───── <ARRAY> [1:4-1:5]
                              ├───── <LASGN> [1:4-1:5]
                              │      ├───── :y (variable name)
-                             │      └───── nil 
+                             │      └───── nil (unknown)
                              └───── nil (unknown)
       EXPECT
 
@@ -584,16 +584,16 @@ RSpec.describe ASTree do
                ├───── <ARRAY> [1:0-1:8]
                │      ├───── <LASGN> [1:0-1:1]
                │      │      ├───── :_ (variable name)
-               │      │      └───── nil 
+               │      │      └───── nil (unknown)
                │      ├───── <MASGN> [1:4-1:8]
                │      │      ├───── nil (right hand side)
                │      │      ├───── <ARRAY> [1:4-1:8]
                │      │      │      ├───── <LASGN> [1:4-1:5]
                │      │      │      │      ├───── :_ (variable name)
-               │      │      │      │      └───── nil 
+               │      │      │      │      └───── nil (unknown)
                │      │      │      ├───── <LASGN> [1:7-1:8]
                │      │      │      │      ├───── :x (variable name)
-               │      │      │      │      └───── nil 
+               │      │      │      │      └───── nil (unknown)
                │      │      │      └───── nil (unknown)
                │      │      └───── nil (rest variable)
                │      └───── nil (unknown)
@@ -1804,16 +1804,16 @@ RSpec.describe ASTree do
                ├───── <ARRAY> [1:0-1:1]
                │      ├───── <LASGN> [1:0-1:1]
                │      │      ├───── :a (variable name)
-               │      │      └───── nil 
+               │      │      └───── nil (unknown)
                │      └───── nil (unknown)
                └───── <POSTARG> [1:0-1:11]
                       ├───── <LASGN> [1:4-1:8]
                       │      ├───── :rest (variable name)
-                      │      └───── nil 
+                      │      └───── nil (unknown)
                       └───── <ARRAY> [1:10-1:11]
                              ├───── <LASGN> [1:10-1:11]
                              │      ├───── :z (variable name)
-                             │      └───── nil 
+                             │      └───── nil (unknown)
                              └───── nil (unknown)
       EXPECT
 

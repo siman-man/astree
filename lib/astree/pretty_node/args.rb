@@ -2,25 +2,25 @@ class ASTree::PrettyNode::ARGS < ASTree::PrettyNode
   def label_name(index)
     case index
     when 0
-      '(pre_num)'
+      'pre_num'
     when 1
-      '(pre_init)'
+      'pre_init'
     when 2
-      '(opt)'
+      'opt'
     when 3
-      '(first_post)'
+      'first_post'
     when 4
-      '(post_num)'
+      'post_num'
     when 5
-      '(post_init)'
+      'post_init'
     when 6
-      '(rest)'
+      'rest'
     when 7
-      '(kw)'
+      'kw'
     when 8
-      '(kwrest)'
+      'kwrest'
     when 9
-      '(block)'
+      'block'
     end
   end
 end

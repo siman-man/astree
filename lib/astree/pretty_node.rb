@@ -13,7 +13,7 @@ class ASTree
         raise "Unexpected index [#{index}] - #{node.inspect}."
       end
 
-      "%s %s\n" % [colorize_element(element_value(index)), label]
+      "%s (%s)\n" % [colorize_element(element_value(index)), label]
     end
 
     def element_value(index)

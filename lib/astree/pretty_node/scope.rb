@@ -2,11 +2,11 @@ class ASTree::PrettyNode::SCOPE < ASTree::PrettyNode
   def label_name(index)
     case index
     when 0
-      '(local table)'
+      'local table'
     when 1
-      '(arguments)'
+      'arguments'
     when 2
-      '(body)'
+      'body'
     end
   end
 end

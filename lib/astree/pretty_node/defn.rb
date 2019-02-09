@@ -2,7 +2,7 @@ class ASTree::PrettyNode::DEFN < ASTree::PrettyNode
   def label_name(index)
     case index
     when 0
-      '(method id)'
+      'method id'
     end
   end
 end

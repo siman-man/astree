@@ -2,9 +2,9 @@ class ASTree::PrettyNode::OPCALL < ASTree::PrettyNode
   def label_name(index)
     case index
     when 1
-      '(method id)'
+      'method id'
     when 2
-      '(arguments)'
+      'arguments'
     end
   end
 end

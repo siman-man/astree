@@ -2,9 +2,9 @@ class ASTree::PrettyNode::DXSTR < ASTree::PrettyNode
   def label_name(index)
     case index
     when 0
-      '(preceding string)'
+      'preceding string'
     when 2
-      '(tailing string)'
+      'tailing string'
     end
   end
 end

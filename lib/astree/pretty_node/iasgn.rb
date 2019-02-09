@@ -2,9 +2,9 @@ class ASTree::PrettyNode::IASGN < ASTree::PrettyNode
   def label_name(index)
     case index
     when 0
-      '(variable name)'
+      'variable name'
     when 1
-      '(unknown)'
+      'unknown'
     end
   end
 end
