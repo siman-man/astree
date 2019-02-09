@@ -450,6 +450,41 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'masgn with postarg' do
+      code = <<~'CODE'
+        _, (_, x) = sexp
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:16]
+        ├───── [:_, :x] (local table)
+        ├───── nil (arguments)
+        └───── <MASGN> [1:0-1:16]
+               ├───── <VCALL> [1:12-1:16]
+               │      └───── :sexp (method id)
+               ├───── <ARRAY> [1:0-1:8]
+               │      ├───── <LASGN> [1:0-1:1]
+               │      │      ├───── :_ (variable name)
+               │      │      └───── nil 
+               │      ├───── <MASGN> [1:4-1:8]
+               │      │      ├───── nil (right hand side)
+               │      │      ├───── <ARRAY> [1:4-1:8]
+               │      │      │      ├───── <LASGN> [1:4-1:5]
+               │      │      │      │      ├───── :_ (variable name)
+               │      │      │      │      └───── nil 
+               │      │      │      ├───── <LASGN> [1:7-1:8]
+               │      │      │      │      ├───── :x (variable name)
+               │      │      │      │      └───── nil 
+               │      │      │      └───── nil (unknown)
+               │      │      └───── nil (rest variable)
+               │      └───── nil (unknown)
+               └───── nil (rest variable)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'iasgn' do
       code = <<~'CODE'
         @x = 1
