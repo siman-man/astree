@@ -1032,6 +1032,26 @@ RSpec.describe ASTree do
       expect(result).to eq(expect)
     end
 
+    it 'return without values' do
+      code = <<~'CODE'
+        return if true
+      CODE
+
+      expect = <<~'EXPECT'
+        <SCOPE> [1:0-1:14]
+        ├───── [] (local table)
+        ├───── nil (arguments)
+        └───── <IF> [1:0-1:14]
+               ├───── <TRUE> [1:10-1:14]
+               ├───── <RETURN> [1:0-1:6]
+               │      └───── nil (value)
+               └───── nil (else clause)
+      EXPECT
+
+      result = ASTree.parse(code).to_s.uncolorize
+      expect(result).to eq(expect)
+    end
+
     it 'hash' do
       code = <<~'CODE'
         { a: 1, b: 2 }
